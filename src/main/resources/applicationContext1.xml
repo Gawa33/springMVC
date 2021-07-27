@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--创建方式1：空参构造创建-->
+<!--    <bean name="user" class="cn.itcast.bean.User" scope="singleton"></bean>-->
+<!--    <bean name="user" class="cn.itcast.bean.User" scope="prototype"></bean>-->
+    <!--init-method配置一个方法作为生命周期初始化方法.spring会在对象创建之后立即调用.
+        destory-method配置一个方法作为生命周期的销毁方法.spring容器在关闭并销毁所有容器中的对象之前调用.-->
+    <bean name="user" class="cn.itcast.bean.User" init-method="init" destroy-method="destory"></bean>
+    <!--创建方式2：静态工厂创建
+        调用UserFactory的createUser方法创建名为user2的对象，放入容器-->
+    <bean name="user2" class="cn.itcast.b_create.UserFactory" factory-method="createUser"></bean>
+    <!--创建方式3：实例工厂创建
+    调用UserFactory对象的createUser2方法创建名为user3的对象，放入容器-->
+    <bean name="user3" factory-bean="UserFactory" factory-method="createUser2"></bean>
+    <!--先煎UserFactory作为普通的Bean配置到spring容器中-->
+    <bean name="UserFactory" class="cn.itcast.b_create.UserFactory"></bean>
+
+    <!--spring的分模块配置爱，可导入其他spring配置文件-->
+    <import resource="applicationContext.xml"></import>
+</beans>
